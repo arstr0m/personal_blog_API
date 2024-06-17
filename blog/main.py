@@ -5,23 +5,13 @@ from sqlalchemy.orm import Session
 
 from blog import crud
 from . import models, schemas
-from .database import SessionLocal, engine
-
-models.Base.metadata.create_all(bind=engine)
-
+from .database import engine, get_db
 
 ##pip install psycopg2
 
 
-def get_db():
-    db = SessionLocal()
-    try:
-        yield db
-    finally:
-        db.close()
-
-
 app = FastAPI()
+models.Base.metadata.create_all(bind=engine)
 
 
 @app.get("/")
